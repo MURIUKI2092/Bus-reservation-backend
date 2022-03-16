@@ -1,5 +1,7 @@
 const User =require("../models/user")
+const bcrypt = require('bcrypt')
 const Register=(req,res)=>{
+  
   const {FirstName,LastName,email,password}=req.body
   if(req.password.length<6){
     return res.statusCode(400).json({
