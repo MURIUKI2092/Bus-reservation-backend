@@ -1,10 +1,29 @@
-const express =require ('express');
-const connectDB = require('./models/db');
-const app= express();
-const port =5000
-connectDB('mongodb://localhost/local');
 
-app.listen(port,()=>{
-  console.log(`server is connected to port ${port}`)
+const express = require ('express')
+
+const app =express()
+const router= express.Router();
+
+app. use(express.json());
+
+const bcrypt = require('bcrypt')
+
+const users= [];
+
+app.get ('/users',(req,res)=>{
+  res.json(users)
+});
+
+app.post ('/users/login',(req,res)=>{
+  bcrypt.hash(req.body.password,10,(err,hash)=>{
+    if (err){
+      return res.status(500).json({
+        error:err
+      });
+
+    }
+  })
+
+
 })
-app.use("/api/v1/auth", require("./routes/auth"))
+app.listen(5000)

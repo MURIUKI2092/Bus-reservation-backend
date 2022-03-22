@@ -1,6 +1,7 @@
-const Database =require('mongoose')
+const Database =[];
 
-const UserTable= new Database.Schema({
+const UserSchema= Database.Schema({
+  _id: Database.Schema.Types.ObjectId(),
   FirstName:{
   type:String,
   unique:false,
@@ -26,6 +27,5 @@ const UserTable= new Database.Schema({
 
   
 })
-const User= Database.model("user",UserTable
-)
-module.exports=User
+
+module.exports=Database.model('User',UserSchema);
