@@ -1,6 +1,6 @@
-const Database =[];
+const mongoose = require("mongoose")
 
-const UserSchema= Database.Schema({
+const UserSchema= new mongoose.Schema({
   _id: Database.Schema.Types.ObjectId(),
   FirstName:{
   type:String,
@@ -24,8 +24,10 @@ const UserSchema= Database.Schema({
     required:true
 
   },
+  isAdmin:{
+    type:Boolean,
+    default:false
+  },
+},{timestamps:true})
 
-  
-})
-
-module.exports=Database.model('User',UserSchema);
+module.exports=mongoose.model('User',UserSchema);

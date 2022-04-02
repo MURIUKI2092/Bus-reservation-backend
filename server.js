@@ -1,18 +1,22 @@
+const express = require("express");
+const app = express();
+const mongoose =require("mongoose");
+port = 5000
 
-const express = require ('express')
+const dotenv = require("dotenv")
 
-const app =express()
-const router= express.Router();
+dotenv.config();
 
-app. use(express.json());
-
-const bcrypt = require('bcrypt')
-
-const users= [];
-
-app.get ('/users',(req,res)=>{
-  res.json(users)
-});
+mongoose
+.connect (process.env.MONGO_URL)
+ 
+  .then(()=>console.log("DB connection Successful"))
+  .catch((err)=>{
+    console.log(err)
+  })
 
 
-app.listen(5000)
+
+app.listen({port},()=>{
+  console.log("The server is up and running")
+})
