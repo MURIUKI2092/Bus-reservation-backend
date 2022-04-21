@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const Passenger = require("../models/passenger");
+const  { verifyToken,verifyTokenAndAuthorization
+  , verifyTokenAndAdmin } = require("./JWT")
 
 
 //  obtain a passenger and store to the Database
-router.post("/passenger",async(req,res)=>{
+router.post("/passenger",verifyToken,async(req,res)=>{
   try{
     const newPassenger = new Passenger({
       passengerName:req.body.passengerName,
