@@ -21,7 +21,7 @@ mongoose
 app.use("/api/v1/auth",AuthRoute);
 app.use("/api/v1/user",UserRoute);
 app.use("/api/v1/user",PassengerRoute);
-app.use("/api/v1/user",BusRoute)
+app.use("/api/v1/buses",BusRoute)
 
 
 app.listen({port},()=>{

@@ -1,9 +1,10 @@
 const router = require("express").Router();
+
 const Buses =require("../models/buses");
 
 //Admin storing buses info to the database
 
-router.post("/buses",async(req,res)=>{
+router.post("/",async(req,res)=>{
   try{
     const Bus = new Buses({
       BusNo:req.body.BusNo,
@@ -26,8 +27,8 @@ router.post("/buses",async(req,res)=>{
 
 // update a bus details
 
-router.put("/buses/:id",async(req,res)=>{
-  if(req.body.busId===req.params.id){
+router.put("/:id",async(req,res)=>{
+  
     try{
       const updatedBus =  await Buses.findByIdAndUpdate(req.params.id,{
         $set:req.body
@@ -40,21 +41,43 @@ router.put("/buses/:id",async(req,res)=>{
     }catch(err){
       res.status(200).json(err);
     }
-  }
+ 
 
 
 })
 
 //get all buses
-router.get("/buses",async(req,res)=>{
- 
-  try{
-    Buses.find({}).then((bus)=>{
-      res.status(200).json(bus);
-    })
+router.get("/",async(req,res)=>{
+  try {
+    const allBuses = await Buses.find();
+    res.status(200).json(allBuses)
 
   }catch(err){
-    res.status(500).json(err);
+    res.status(500).json(err)
+  }
+})
+
+//get a single bus
+router.get("/:id",async(req,res)=>{
+  try{
+    const bus = await Buses.findById(req.params.id)
+    res.status(200).json(bus)
+   
+
+  }catch(err){
+    res.status(200).json(err)
+  }
+})
+
+// delete a bus
+router.delete("/:id",async(req,res)=>{
+  try{
+    const busToDelete = await Buses.findByIdAndDelete(req.params.id);
+    res.status(200).json("bus has been deleted")
+
+  }catch(err){
+    res.status(200).json(err);
+
   }
 })
 
