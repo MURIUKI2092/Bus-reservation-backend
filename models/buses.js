@@ -6,7 +6,7 @@ const BusSchema = new mongoose.Schema({
   destinationStation:{type:String,required:true},
   price:{type:Number,required:true},
   departureTime:{type:String,required:true},
-  ArrivalTIme:{type:String,required:true}
+  ArrivalTime:{type:String,required:true}
 })
 
 module.exports = mongoose.model("Buses",BusSchema)

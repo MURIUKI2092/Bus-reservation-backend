@@ -1,13 +1,13 @@
 const mongoose = require("mongoose")
 
 const UserSchema= new mongoose.Schema({
-  _id: Database.Schema.Types.ObjectId(),
-  FirstName:{
+  
+  firstName:{
   type:String,
   unique:false,
   required:true,
   },
-  LastName:{
+  lastName:{
   type:String,
   unique:false,
   required:true,
@@ -20,14 +20,13 @@ const UserSchema= new mongoose.Schema({
   },
   password:{
     type:String,
-    minlength:6,
-    required:true
+    
 
   },
-  isAdmin:{
+/*   isAdmin:{
     type:Boolean,
     default:false
-  },
+  }, */
 },{timestamps:true})
 
 module.exports=mongoose.model('User',UserSchema);
