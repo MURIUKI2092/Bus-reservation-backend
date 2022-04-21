@@ -1,7 +1,7 @@
 const  router = require  ("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const res = require("express/lib/response");
+
 
 
 
@@ -14,7 +14,8 @@ router.put("/:id",async(req,res)=>{
       req.body.password = await  bcrypt.hash(req.body.password,salt);
       
     }
-    try{const updatedUser = await User.findByIdAndUpdate(req.params.id,{
+    try{
+      const updatedUser = await User.findByIdAndUpdate(req.params.id,{
       $set:req.body
     },{new:true});
     res.status(200).json(updatedUser);
@@ -54,7 +55,7 @@ router.delete("/:id",async(req,res)=>{
 })
 // get a single user
 
-router.get("/:id",async()=>{
+router.get("/:id",async(req,res)=>{
   try{
     const user = await User.findById(req.params.id);
     const {password,...others}= user._doc;
