@@ -1,13 +1,15 @@
 const  router = require  ("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const  { verifyToken,verifyTokenAndAuthorization
+  , verifyTokenAndAdmin } = require("./JWT")
 
 
 
 
 // update users 
 
-router.put("/:id",async(req,res)=>{
+router.put("/:id",verifyToken,async(req,res)=>{
   if(req.body.userId === req.params.id){
     if(req.body.password){
       const salt = bcrypt.genSalt(10);
@@ -33,7 +35,7 @@ router.put("/:id",async(req,res)=>{
 })
 
 //delete a user
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",verifyTokenAndAuthorization,async(req,res)=>{
   if (req.body.userId=== req.params.id){
     try{
       const user = await User.findById(req.params.id);
@@ -55,7 +57,7 @@ router.delete("/:id",async(req,res)=>{
 })
 // get a single user
 
-router.get("/:id",async(req,res)=>{
+router.get("/:id",verifyTokenAndAdmin,async(req,res)=>{
   try{
     const user = await User.findById(req.params.id);
     const {password,...others}= user._doc;

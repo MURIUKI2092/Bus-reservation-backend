@@ -1,10 +1,11 @@
 const router = require("express").Router();
-
+const  { verifyToken,verifyTokenAndAuthorization
+  , verifyTokenAndAdmin } = require("./JWT")
 const Buses =require("../models/buses");
 
 //Admin storing buses info to the database
 
-router.post("/",async(req,res)=>{
+router.post("/",verifyTokenAndAdmin,async(req,res)=>{
   try{
     const Bus = new Buses({
       BusNo:req.body.BusNo,
@@ -27,7 +28,7 @@ router.post("/",async(req,res)=>{
 
 // update a bus details
 
-router.put("/:id",async(req,res)=>{
+router.put("/:id",verifyTokenAndAdmin,async(req,res)=>{
   
     try{
       const updatedBus =  await Buses.findByIdAndUpdate(req.params.id,{
@@ -47,7 +48,7 @@ router.put("/:id",async(req,res)=>{
 })
 
 //get all buses
-router.get("/",async(req,res)=>{
+router.get("/",verifyTokenAndAuthorization,async(req,res)=>{
   try {
     const allBuses = await Buses.find();
     res.status(200).json(allBuses)
@@ -70,7 +71,7 @@ router.get("/:id",async(req,res)=>{
 })
 
 // delete a bus
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",verifyTokenAndAdmin,async(req,res)=>{
   try{
     const busToDelete = await Buses.findByIdAndDelete(req.params.id);
     res.status(200).json("bus has been deleted")
